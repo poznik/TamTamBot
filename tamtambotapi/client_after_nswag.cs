@@ -5,7 +5,7 @@
 // </auto-generated>
 //----------------------
 
-namespace tamtambotapi
+namespace tamtambotapi_rem
 {
 #pragma warning disable
 
@@ -14,7 +14,6 @@ namespace tamtambotapi
     {
         private string _baseUrl = "https://botapi.tamtam.chat";
         private System.Net.Http.HttpClient _httpClient;
-        private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
         private string _token;
 
 
@@ -22,12 +21,7 @@ namespace tamtambotapi
         {
             _httpClient = httpClient;
             _token = $"access_token={TamTamBotApiKey}";
-            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() =>
-            {
-                var settings = new Newtonsoft.Json.JsonSerializerSettings();
-                UpdateJsonSerializerSettings(settings);
-                return settings;
-            });
+
         }
 
         public string BaseUrl
@@ -38,10 +32,7 @@ namespace tamtambotapi
 
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
 
-        partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
 
         /// <summary>Get current bot info</summary>
         /// <returns>Expected response to a valid request</returns>
@@ -51,105 +42,7 @@ namespace tamtambotapi
             return GetMyInfoAsync(System.Threading.CancellationToken.None);
         }
 
-        /// <summary>Get current bot info</summary>
-        /// <returns>Expected response to a valid request</returns>
-        /// <exception cref="BotApiException">A server side error occurred.</exception>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async System.Threading.Tasks.Task<UserWithPhoto> GetMyInfoAsync(System.Threading.CancellationToken cancellationToken)
-        {
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/me").Append("?").Append(_token);
 
-            var client_ = _httpClient;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var result_ = default(UserWithPhoto);
-                            try
-                            {
-                                result_ = Newtonsoft.Json.JsonConvert.DeserializeObject<UserWithPhoto>(responseData_, _settings.Value);
-                                return result_;
-                            }
-                            catch (System.Exception exception_)
-                            {
-                                throw new BotApiException("Could not deserialize the response body.", (int)response_.StatusCode, responseData_, headers_, exception_);
-                            }
-                        }
-                        else
-                        if (status_ == "401")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var result_ = default(Error);
-                            try
-                            {
-                                result_ = Newtonsoft.Json.JsonConvert.DeserializeObject<Error>(responseData_, _settings.Value);
-                            }
-                            catch (System.Exception exception_)
-                            {
-                                throw new BotApiException("Could not deserialize the response body.", (int)response_.StatusCode, responseData_, headers_, exception_);
-                            }
-                            throw new BotApiException<Error>("Authorization Error. No `access_token` provided or token is invalid", (int)response_.StatusCode, responseData_, headers_, result_, null);
-                        }
-                        else
-                        if (status_ == "500")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var result_ = default(Error);
-                            try
-                            {
-                                result_ = Newtonsoft.Json.JsonConvert.DeserializeObject<Error>(responseData_, _settings.Value);
-                            }
-                            catch (System.Exception exception_)
-                            {
-                                throw new BotApiException("Could not deserialize the response body.", (int)response_.StatusCode, responseData_, headers_, exception_);
-                            }
-                            throw new BotApiException<Error>("Internal Server Error", (int)response_.StatusCode, responseData_, headers_, result_, null);
-                        }
-                        else
-                        if (status_ != "200" && status_ != "204")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new BotApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
-                        }
-
-                        return default(UserWithPhoto);
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-            }
-        }
 
         /// <summary>Get all chats</summary>
         /// <param name="count">Number of chats requested</param>
@@ -2669,56 +2562,9 @@ namespace tamtambotapi
 
     #region Model
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class User
-    {
-        /// <summary>Users identifier</summary>
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
-        public long User_id { get; set; }
 
-        /// <summary>Users visible name</summary>
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Name { get; set; }
 
-        /// <summary>Unique public user name. Can be `null` if user is not accessible or it is not set</summary>
-        [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.AllowNull)]
-        public string Username { get; set; }
 
-        public string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-
-        public static User FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<User>(data);
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class UserWithPhoto : User
-    {
-        /// <summary>URL of avatar</summary>
-        [Newtonsoft.Json.JsonProperty("avatar_url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Avatar_url { get; set; }
-
-        /// <summary>URL of avatar of a bigger size</summary>
-        [Newtonsoft.Json.JsonProperty("full_avatar_url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Full_avatar_url { get; set; }
-
-        public string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-
-        public static UserWithPhoto FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<UserWithPhoto>(data);
-        }
-
-    }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class Chat
@@ -4202,35 +4048,7 @@ namespace tamtambotapi
 
     }
 
-    /// <summary>Server returns this if there was an exception to your request</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class Error
-    {
-        /// <summary>Error</summary>
-        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Error1 { get; set; }
 
-        /// <summary>Error code</summary>
-        [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Code { get; set; }
-
-        /// <summary>Human-readable description</summary>
-        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Message { get; set; }
-
-        public string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-
-        public static Error FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Error>(data);
-        }
-
-    }
 
     /// <summary>Endpoint you should upload to your binaries</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
@@ -4906,40 +4724,6 @@ namespace tamtambotapi
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "12.2.5.0 (NJsonSchema v9.13.37.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class BotApiException : System.Exception
-    {
-        public int StatusCode { get; private set; }
-
-        public string Response { get; private set; }
-
-        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
-
-        public BotApiException(string message, int statusCode, string response, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
-            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + response.Substring(0, response.Length >= 512 ? 512 : response.Length), innerException)
-        {
-            StatusCode = statusCode;
-            Response = response;
-            Headers = headers;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
-        }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "12.2.5.0 (NJsonSchema v9.13.37.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class BotApiException<TResult> : BotApiException
-    {
-        public TResult Result { get; private set; }
-
-        public BotApiException(string message, int statusCode, string response, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
-            : base(message, statusCode, response, headers, innerException)
-        {
-            Result = result;
-        }
-    }
 
 #pragma warning restore
 }

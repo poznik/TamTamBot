@@ -2,6 +2,7 @@
 using tamtambotapi;
 using System.Net.Http;
 using System.IO;
+using System.Threading;
 
 namespace tamtambottest
 {
@@ -10,11 +11,12 @@ namespace tamtambottest
         static void Main(string[] args)
         {
             HttpClient httpc = new HttpClient();
-            var s = File.ReadAllText("apikey.config");
-            tamtamclient cli = new tamtamclient(httpc, s);
+            string token = File.ReadAllText("token.config");
+            TamTamBotClient cli = new TamTamBotClient(token);
+
             try
             {
-                var r = cli.GetMyInfoAsync().Result;
+                var r = cli.GetMyInfoAsync(CancellationToken.None).Result;
                 Console.WriteLine($"Hello from bot {r.Username}");
             }
             catch (Exception ex)
@@ -24,7 +26,6 @@ namespace tamtambottest
 
             Console.ReadKey();
         }
-
 
 
     }

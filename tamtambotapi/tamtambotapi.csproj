@@ -14,5 +14,11 @@
     <Compile Remove="Classes\User.cs" />
     <Compile Remove="Classes\Update.cs" />
     <Compile Remove="Classes\Photo.cs" />
+    <Compile Remove="Model\Photo.cs" />
+    <Compile Remove="Model\Update.cs" />
+    <Compile Remove="tamtamclient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="client_after_nswag.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>
