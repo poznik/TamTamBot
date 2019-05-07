@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using tamtambotapi.Model;
+using TamTamBot.Model;
 
-namespace tamtambotapi
+namespace TamTamBot
 {
     public partial class TamTamBotClient
     {

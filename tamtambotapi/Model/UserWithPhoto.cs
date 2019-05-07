@@ -1,5 +1,5 @@
 ﻿using System;
-namespace tamtambotapi.Model
+namespace TamTamBot.Model
 {
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class UserWithPhoto : User

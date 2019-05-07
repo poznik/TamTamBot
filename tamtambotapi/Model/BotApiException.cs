@@ -1,5 +1,5 @@
 ﻿using System;
-namespace tamtambotapi.Model
+namespace TamTamBot.Model
 {
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "12.2.5.0 (NJsonSchema v9.13.37.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class BotApiException : System.Exception

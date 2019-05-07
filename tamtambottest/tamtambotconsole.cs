@@ -1,5 +1,5 @@
 ﻿using System;
-using tamtambotapi;
+using TamTamBot;
 using System.Net.Http;
 using System.IO;
 using System.Threading;
@@ -10,7 +10,6 @@ namespace tamtambottest
     {
         static void Main(string[] args)
         {
-            HttpClient httpc = new HttpClient();
             string token = File.ReadAllText("token.config");
             TamTamBotClient cli = new TamTamBotClient(token);
 

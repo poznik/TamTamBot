@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tamtambotapi", "tamtambotapi\tamtambotapi.csproj", "{7102F157-D7C0-4B66-B74D-195A5C9330CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TamTamBot", "tamtambotapi\TamTamBot.csproj", "{7102F157-D7C0-4B66-B74D-195A5C9330CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tamtambottest", "tamtambottest\tamtambottest.csproj", "{423D2528-5D81-43C3-9446-1B26D9087943}"
 EndProject
