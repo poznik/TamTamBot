@@ -1,46 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-
-namespace tamtambotapi.Classes
+namespace TamTamBot.Model
 {
-    public class Sender
+    /// <summary>`Update` object repsesents different types of events that happened in chat. See its inheritors</summary>
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "update_type")]
+    [JsonInheritanceAttribute("message_created", typeof(MessageCreatedUpdate))]
+    [JsonInheritanceAttribute("message_callback", typeof(MessageCallbackUpdate))]
+    [JsonInheritanceAttribute("message_edited", typeof(MessageEditedUpdate))]
+    [JsonInheritanceAttribute("message_removed", typeof(MessageRemovedUpdate))]
+    [JsonInheritanceAttribute("bot_added", typeof(BotAddedToChatUpdate))]
+    [JsonInheritanceAttribute("bot_removed", typeof(BotRemovedFromChatUpdate))]
+    [JsonInheritanceAttribute("user_added", typeof(UserAddedToChatUpdate))]
+    [JsonInheritanceAttribute("user_removed", typeof(UserRemovedFromChatUpdate))]
+    [JsonInheritanceAttribute("bot_started", typeof(BotStartedUpdate))]
+    [JsonInheritanceAttribute("chat_title_changed", typeof(ChatTitleChangedUpdate))]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.13.37.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Update
     {
-        public long user_id { get; set; }
-        public string name { get; set; }
-    }
+        /// <summary>Unix-time when event has occured</summary>
+        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
+        public long Timestamp { get; set; }
 
-    public class Recipient
-    {
-        public long chat_id { get; set; }
-        public string chat_type { get; set; }
-        public long user_id { get; set; }
-    }
+        public string ToJson()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
 
-    public class Body
-    {
-        public string mid { get; set; }
-        public long seq { get; set; }
-        public string text { get; set; }
-    }
+        public static Update FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Update>(data);
+        }
 
-    public class Message
-    {
-        public Sender sender { get; set; }
-        public Recipient recipient { get; set; }
-        public long timestamp { get; set; }
-        public Body body { get; set; }
-    }
-
-    public class Update
-    {
-        public Message message { get; set; }
-        public long timestamp { get; set; }
-        public string update_type { get; set; }
-    }
-
-    public class Updates
-    {
-        public List<Update> updates { get; set; }
-        public int marker { get; set; }
     }
 }

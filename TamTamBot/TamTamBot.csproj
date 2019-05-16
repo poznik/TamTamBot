@@ -22,7 +22,6 @@
     <Compile Remove="Classes\Update.cs" />
     <Compile Remove="Classes\Photo.cs" />
     <Compile Remove="Model\Photo.cs" />
-    <Compile Remove="Model\Update.cs" />
     <Compile Remove="tamtamclient.cs" />
     <Compile Remove="client_after_nswag.cs" />
     <Compile Remove="Staff\client_after_nswag.cs" />

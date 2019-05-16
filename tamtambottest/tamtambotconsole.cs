@@ -24,6 +24,16 @@ namespace tamtambottest
                 Console.WriteLine(ex.Message);
             }
 
+            try
+            {
+                var r = cli.GetUpdatesAsync(null, null, null, null, CancellationToken.None ).Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
             Console.ReadKey();
         }
 
