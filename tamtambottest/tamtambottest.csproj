@@ -6,14 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="apikey.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\TamTamBotClient\TamTamBotClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="token.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TamTamBot\TamTamBot.csproj" />
-  </ItemGroup>
+
 </Project>
